@@ -9,4 +9,4 @@ Finalmente criei meu primeiro projeto open source, é pequeno e simples mas pret
 
 ## License
 
-Estoque Gusella is released under the MIT license. See LICENSE for details.
+estoque_gusella is released under the MIT license. See LICENSE for details.
