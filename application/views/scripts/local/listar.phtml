@@ -1,0 +1,25 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nome</th>            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->locals as $local): ?>
+        <tr>
+            <td><?= $local->id?></td>
+            <td><?= $local->nome?></td>
+<!--            @TODO aria icon !!-->
+            <td>
+                <a href="editar/<?= $local->id?>" class="glyphicon glyphicon-edit" aria-></a>
+            </td>
+            <td>
+                <a href="excluir/<?= $local->id?>" class="glyphicon glyphicon-remove" aria-></a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+    
+</table>

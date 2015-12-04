@@ -1,0 +1,63 @@
+<p>Cadastro</p>
+<p><?= $this->msg;?></p>
+<form method="POST">
+
+    <div class="form-group <?= (isset($this->errors['nome'])) ?'has-error':''?>">
+        <label for="nome">Nome do Produto</label>
+        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do Produto" aria-describedby="descNome">
+        <?php if(isset($this->errors['nome'])){?>
+        <span id="descNome" class="help-block"><?php echo $this->errors['nome']; ?></span>
+        <?php } ?>
+    </div>
+
+    <div class="form-group <?= (isset($this->errors['local_id'])) ?'has-error':''?>">
+        <label class="control-label" for="local_id">Local</label>
+        <div class="input-group">
+            <a type="button" class="input-group-addon" data-toggle="modal" data-target="#myModal">+</a>
+            
+            <select class="form-control" id="local_id" name="local_id" aria-describedby="descLocalId">
+                <option value="">Selecione</option>
+                <?php
+                foreach ($this->locals as $local):
+                    echo '<option value="' . $local->id . '">' . $this->escape($local->nome) . '</option>';
+                endforeach;
+                ?>
+            </select>
+            
+        </div>
+        <?php if(isset($this->errors['local_id'])){?>
+        <span id="descLocalId" class="help-block"><?php echo $this->errors['local_id']; ?></span>
+        <?php } ?>
+    </div>
+    
+    <div class="form-group <?= (isset($this->errors['preco'])) ?'has-error':''?>">
+        <label for="preco">Preço</label>
+        <input type="text" class="form-control" id="preco" name="preco" placeholder="Preço" aria-describedby="descPreco">
+        <?php if(isset($this->errors['preco'])){?>
+        <span id="descPreco" class="help-block"><?php echo $this->errors['preco']; ?></span>
+        <?php } ?>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+    
+    <div class="form-group">
+        <label class="control-label" for="inputGroupSuccess1">Input group with success</label>
+        <div class="input-group">
+            <span class="input-group-addon" data-toggle="modal" data-target="#myModal">+</span>
+            <select type="text" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status">
+                <option>asd</option>
+            </select>
+            <!--<span class="input-group-addon">
+                <button type="button" class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#myModal"></button>
+            </span>
+            <!--<span class="input-group-addon">@</span> -->
+        </div>
+    </div>
+    
+</form>
+<?= $this->render('local/cadastrar_modal.phtml') ?>
+<script>
+    $('#preco').mask('000.000.000.000.000,00', {reverse: true});
+</script>
+<?php
+// plugins
+$this->headScript()->appendFile('/js/jquery.mask.min.js');

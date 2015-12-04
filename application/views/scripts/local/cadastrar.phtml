@@ -1,0 +1,14 @@
+<p>Cadastro</p>
+<p><?= $this->msg;?></p>
+<form method="POST">
+
+    <div class="form-group <?= (isset($this->errors['nome'])) ?'has-error':''?>">
+        <label for="nome">Nome do Local</label>
+        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do Local" aria-describedby="descNome">
+        <?php if(isset($this->errors['nome'])){?>
+        <span id="descNome" class="help-block"><?php echo $this->errors['nome']; ?></span>
+        <?php } ?>
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>

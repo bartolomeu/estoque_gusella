@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Produto</th>
+            <th>Local</th>
+            <th>Preço</th>
+            
+            
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->produtos as $prod): ?>
+        <tr>
+            <td><?= $prod->id?></td>
+            <td><?= $prod->nome?></td>
+            <td><?= $prod->local_id?></td>
+            <td><?= $prod->preco?></td>
+<!--            @TODO aria icon !!-->
+            <td><a href="editar/<?= $prod->id?>" class="glyphicon glyphicon-edit" aria-></a></td>
+            <td><a href="excluir/<?= $prod->id?>" class="glyphicon glyphicon-remove" aria-></a></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+    
+</table>
