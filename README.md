@@ -6,3 +6,7 @@ SISTEMA DE ESTOQUE
 Feito com Zend Framework 1
 
 Finalmente criei meu primeiro projeto open source, é pequeno e simples mas pretendo ir incrementando ele com o tempo.
+
+## License
+
+Estoque Gusella is released under the MIT license. See LICENSE for details.
