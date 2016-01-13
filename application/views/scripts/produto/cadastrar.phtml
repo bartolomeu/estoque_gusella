@@ -1,10 +1,14 @@
-<p>Cadastro</p>
+<h3><?= ucfirst(Zend_Controller_Front::getInstance()->getRequest()->getActionName());?></h3>
 <p><?= $this->msg;?></p>
 <form method="POST">
-
+<?php var_dump($this->produto)?>
     <div class="form-group <?= (isset($this->errors['nome'])) ?'has-error':''?>">
         <label for="nome">Nome do Produto</label>
-        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do Produto" aria-describedby="descNome">
+        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do Produto" aria-describedby="descNome" 
+            <?php if(Zend_Controller_Front::getInstance()->getRequest()->getActionName() == 'editar'){
+               echo 'value="'.$this->produto['nome'].'"';
+            } ?>
+        >
         <?php if(isset($this->errors['nome'])){?>
         <span id="descNome" class="help-block"><?php echo $this->errors['nome']; ?></span>
         <?php } ?>
@@ -19,7 +23,11 @@
                 <option value="">Selecione</option>
                 <?php
                 foreach ($this->locals as $local):
-                    echo '<option value="' . $local->id . '">' . $this->escape($local->nome) . '</option>';
+                    echo '<option value="' . $local->id . '"';
+                    if(Zend_Controller_Front::getInstance()->getRequest()->getActionName() == 'editar' && $this->produto['local_id'] == $local->id){
+                        echo ' selected ';
+                    }
+                    echo '>' . $this->escape($local->nome) . '</option>';
                 endforeach;
                 ?>
             </select>
@@ -32,26 +40,17 @@
     
     <div class="form-group <?= (isset($this->errors['preco'])) ?'has-error':''?>">
         <label for="preco">Preço</label>
-        <input type="text" class="form-control" id="preco" name="preco" placeholder="Preço" aria-describedby="descPreco">
+        <input type="text" class="form-control" id="preco" name="preco" placeholder="Preço" aria-describedby="descPreco"
+            <?php if(Zend_Controller_Front::getInstance()->getRequest()->getActionName() == 'editar'){
+               echo 'value="'.$this->produto['preco'].'"';
+            } ?>
+        >
         <?php if(isset($this->errors['preco'])){?>
         <span id="descPreco" class="help-block"><?php echo $this->errors['preco']; ?></span>
         <?php } ?>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
     
-    <div class="form-group">
-        <label class="control-label" for="inputGroupSuccess1">Input group with success</label>
-        <div class="input-group">
-            <span class="input-group-addon" data-toggle="modal" data-target="#myModal">+</span>
-            <select type="text" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status">
-                <option>asd</option>
-            </select>
-            <!--<span class="input-group-addon">
-                <button type="button" class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#myModal"></button>
-            </span>
-            <!--<span class="input-group-addon">@</span> -->
-        </div>
-    </div>
     
 </form>
 <?= $this->render('local/cadastrar_modal.phtml') ?>

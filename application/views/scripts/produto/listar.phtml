@@ -1,3 +1,9 @@
+<?php if(isset($this->alert)){?>
+<div class="alert alert-<?= $this->alert['tipo'];?> alert-dismissible fade in" role="alert"> 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Fechar"><span aria-hidden="true">×</span></button> 
+    <strong><?= $this->alert['titulo'];?></strong> <?= $this->alert['msg'];?> 
+</div>
+<?php } ?>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -17,7 +23,8 @@
             <td><?= $prod->local_id?></td>
             <td><?= $prod->preco?></td>
 <!--            @TODO aria icon !!-->
-            <td><a href="editar/<?= $prod->id?>" class="glyphicon glyphicon-edit" aria-></a></td>
+<td><a href="<?= $this->url(array('controller'=>'produto','action'=>'editar','id'=>$prod->id));?>" class="glyphicon glyphicon-edit" aria-></a></td>
+<!-- /produto/editar/<?= $prod->id?> -->
             <td><a href="excluir/<?= $prod->id?>" class="glyphicon glyphicon-remove" aria-></a></td>
         </tr>
         <?php endforeach; ?>
