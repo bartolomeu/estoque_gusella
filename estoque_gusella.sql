@@ -70,7 +70,9 @@ INSERT INTO `produto` (`id`, `local_id`, `nome`, `preco`) VALUES
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(11) NOT NULL,
-  `nome` varchar(255) NOT NULL
+  `nome` varchar(255) NOT NULL,
+  `login` varchar(100) NOT NULL,
+  `password` char(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
