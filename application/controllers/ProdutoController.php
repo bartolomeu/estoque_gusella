@@ -29,8 +29,10 @@ class ProdutoController extends Zend_Controller_Action {
                 $this->view->errors = $error;
                 return;
             }
-
+            //@TODO qual padrão usar para receber os dados validar e salvar?
+            //usar exception
             $proDB = new Application_Model_DbTable_Produto();
+            $prodModel = new Application_Model_Produto($this->getRequest()->getParams());
             $proDB->insert($prodModel->__toArray());
 
             $this->view->msg = "Produto Cadastrado com sucesso.";
@@ -85,7 +87,15 @@ class ProdutoController extends Zend_Controller_Action {
                 $this->view->msg = "Atualização não realizado";
                 $this->view->errors = $error;
             }else{
-                $prodDB->update($this->getRequest()->getParams(), array('id=?'=>$id));
+                $dados = $this->getRequest()->getParams();
+                //@TODO change this code to a better place a function on a static Class
+                unset($dados['module']);
+                unset($dados['controller']);
+                unset($dados['action']);
+                unset($dados['id']);
+                $dados['preco'] = str_replace(',', '.', $dados['preco']);
+                
+                $prodDB->update($dados, array('id=?'=>$id));
                 $this->view->msg = "Atualização realizado com sucesso";
                 return $this->indexAction();
             }
@@ -96,8 +106,42 @@ class ProdutoController extends Zend_Controller_Action {
 
     function listarAction() {
         $produtos = new Application_Model_DbTable_Produto();
-        $this->view->produtos = $produtos->fetchAll(null, 'nome asc');
+        $this->view->produtos = $produtos->showAllJoin();
         $this->renderScript('produto/listar.phtml'); // estou tornando explícito o listar pq ele tb será usado no indexAction
+    }
+    
+    function excluirAction() {
+        $id = $this->getRequest()->getParam('id');
+        
+        if (!$id || !is_numeric($id)) {
+            $this->view->alert = array(
+                'tipo' => 'danger',
+                'titulo' => "Alerta",
+                'msg' => "ID inválido."
+            );
+            return $this->indexAction();
+        }
+
+        $prodDB = new Application_Model_DbTable_Produto();
+        $res = $prodDB->find($id)->toArray();
+
+        if (count($res) != 1) {
+            $this->view->alert = array(
+                'tipo' => 'danger',
+                'titulo' => 'Alerta',
+                'msg' => 'Produto não encontrado.'
+            );
+            return $this->indexAction();
+        }
+        
+        $prodDB->delete(array('id'=>$id));
+        
+        $this->view->alert = array(
+                'tipo' => 'success',
+                'titulo' => "Exclusão",
+                'msg' => "Produto ID $id deletado com sucesso."
+            );
+        $this->indexAction();
     }
 
     /**

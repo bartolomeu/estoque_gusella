@@ -4,6 +4,9 @@
     <strong><?= $this->alert['titulo'];?></strong> <?= $this->alert['msg'];?> 
 </div>
 <?php } ?>
+<a class="btn btn-primary"
+    href="<?= $this->url(array('controller'=>'produto','action'=>'cadastrar'));?>"
+>Cadastrar</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -20,12 +23,18 @@
         <tr>
             <td><?= $prod->id?></td>
             <td><?= $prod->nome?></td>
-            <td><?= $prod->local_id?></td>
-            <td><?= $prod->preco?></td>
+            <td><?= $prod->local_nome?></td>
+            <td>R$ <?= number_format($prod->preco, 2)?></td>
 <!--            @TODO aria icon !!-->
-<td><a href="<?= $this->url(array('controller'=>'produto','action'=>'editar','id'=>$prod->id));?>" class="glyphicon glyphicon-edit" aria-></a></td>
+            <td>
+                <a href="<?= $this->url(array('controller'=>'produto','action'=>'editar','id'=>$prod->id));?>" 
+                   class="glyphicon glyphicon-edit" aria-></a>
+            </td>
 <!-- /produto/editar/<?= $prod->id?> -->
-            <td><a href="excluir/<?= $prod->id?>" class="glyphicon glyphicon-remove" aria-></a></td>
+            <td>
+                <a href="<?= $this->url(array('controller'=>'produto','action'=>'excluir','id'=>$prod->id));?>" 
+                   class="glyphicon glyphicon-remove" aria-></a>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>

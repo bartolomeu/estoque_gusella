@@ -1,7 +1,13 @@
 <h3><?= ucfirst(Zend_Controller_Front::getInstance()->getRequest()->getActionName());?></h3>
-<p><?= $this->msg;?></p>
+
+<div class="alert alert-info alert-dismissible fade in" role="alert" id="alert"> 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+        <span aria-hidden="true">×</span></button> 
+    
+    <p id="p_msg"><?= $this->msg;?></p>
+</div>
+
 <form method="POST">
-<?php var_dump($this->produto)?>
     <div class="form-group <?= (isset($this->errors['nome'])) ?'has-error':''?>">
         <label for="nome">Nome do Produto</label>
         <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do Produto" aria-describedby="descNome" 
@@ -42,7 +48,13 @@
         <label for="preco">Preço</label>
         <input type="text" class="form-control" id="preco" name="preco" placeholder="Preço" aria-describedby="descPreco"
             <?php if(Zend_Controller_Front::getInstance()->getRequest()->getActionName() == 'editar'){
-               echo 'value="'.$this->produto['preco'].'"';
+               echo 'value="'.str_replace('.', ',', $this->produto['preco']).'"';
+               
+               /*
+                * 8.5       1       1.89
+                * 8,50      1,00    1,89
+                * 
+                */
             } ?>
         >
         <?php if(isset($this->errors['preco'])){?>
@@ -56,6 +68,29 @@
 <?= $this->render('local/cadastrar_modal.phtml') ?>
 <script>
     $('#preco').mask('000.000.000.000.000,00', {reverse: true});
+    <?= $this->msg ? '' : '$("#alert").hide();' ;?>
+    
+    function cadastro_local (data){
+        if(!data.ok){
+            $('#p_msg').text(data.erro.message);
+            $('#alert').fadeIn();
+            return;
+        }
+        
+        $('#p_msg').text("Local cadastrado com sucesso.");
+        
+        $('#local_id').html('').append($('<option>', {value:'', text:"Selecione"}));
+        
+        $.each(data.locals, function( index, value ) {
+            $('#local_id').append( $('<option>', {
+                value:value.id,
+                text:value.nome
+            }));
+        });
+        
+        $('#local_id').val(data.new_id);
+    }
+    
 </script>
 <?php
 // plugins

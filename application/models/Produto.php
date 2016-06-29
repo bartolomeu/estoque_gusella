@@ -13,7 +13,7 @@ class Application_Model_Produto {
         $this->id = isset($val['id']) ? $val['id'] : null;
         $this->local_id = isset($val['local_id'])? $val['local_id']:null;
         $this->nome = isset($val['nome'])? $val['nome']:null;
-        $this->preco = isset($val['preco'])? $val['preco']:null;
+        $this->preco = isset($val['preco'])? Application_Util_Number::stringToDecimal($val['preco']):null;
     }
 
     function __toArray() {
@@ -21,7 +21,7 @@ class Application_Model_Produto {
         $val['id'] = $this->id;
         $val['local_id'] = $this->local_id;
         $val['nome'] = $this->nome;
-        $val['preco'] = Application_Util_Number::stringToDecimal($this->preco);
+        $val['preco'] = $this->preco;
 
         return $val;
     }

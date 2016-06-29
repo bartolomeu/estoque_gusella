@@ -25,9 +25,11 @@ class LoginController extends Zend_Controller_Action {
                 'password',
                 'MD5(?)'
                 );
+            
+            $param = $this->getRequest()->getParams();
  
-            $adapter->setIdentity($this->getRequest()->getParams()['login']);
-            $adapter->setCredential($this->getRequest()->getParams()['password']);
+            $adapter->setIdentity($param['login']);
+            $adapter->setCredential($param['password']);
  
             $auth   = Zend_Auth::getInstance();
             $result = $auth->authenticate($adapter);

@@ -1,3 +1,6 @@
+<a class="btn btn-primary"
+    href="<?= $this->url(array('controller'=>'local','action'=>'cadastrar'));?>"
+>Cadastrar</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -13,10 +16,10 @@
             <td><?= $local->nome?></td>
 <!--            @TODO aria icon !!-->
             <td>
-                <a href="editar/<?= $local->id?>" class="glyphicon glyphicon-edit" aria-></a>
+                <a href="<?= $this->url(array('controller'=>'local','action'=>'editar','id'=>$local->id));?>" class="glyphicon glyphicon-edit" aria-></a>
             </td>
             <td>
-                <a href="excluir/<?= $local->id?>" class="glyphicon glyphicon-remove" aria-></a>
+                <a href="<?= $this->url(array('controller'=>'local','action'=>'excluir','id'=>$local->id));?>" class="glyphicon glyphicon-remove" aria-></a>
             </td>
         </tr>
         <?php endforeach; ?>
